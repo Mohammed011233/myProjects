@@ -1,0 +1,30 @@
+.wellcom{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+    font-weight: 600;
+    display: inline-block;
+
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+  }
+  
+  img.avatar {
+    width: 200px;
+    border-radius: 50%;
+  }
+
+  .input_todo{
+      display: inline-flex;
+      width: 40%;
+  }
+  
+  .date_todo{
+    display: inline-flex;
+    bottom: 25px;
+    width: 17%;
+  }
+
+ 
