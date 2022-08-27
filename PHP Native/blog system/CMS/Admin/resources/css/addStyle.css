@@ -1,0 +1,16 @@
+p.errorMassage{
+    min-height: 30px;
+}
+
+img.userImg{
+    width: 40px;
+    max-height: 25px;
+}
+
+a.stylebtn{
+    width: 25%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

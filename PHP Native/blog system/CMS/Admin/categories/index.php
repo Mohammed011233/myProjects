@@ -3,29 +3,29 @@ require '../helper/DB_connection.php';
 require '../helper/functions.php';
 
 ################### Insert Data Section  #####################
-//create role
+//create category
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     //fetch & clean data
-    $role_title = clean($_POST['role_title']);
+    $category_title = clean($_POST['Category_title']);
 
     // validation  data
-    validate($role_title, ['required', 'string', 'min', 'max'], 3, 32);
+    validate($category_title, ['required', 'string', 'min', 'max'], 3, 32);
 
 
     ##### insert the role title 
 
     if (!isset($_SESSION['errorMassage'])) {
-        $query = "insert into user_roles (title) values ('$role_title')";
+        $query = "insert into category (title) values ('$category_title')";
 
         //doQuery function for excute query 
         $db_opration =  doQuery($query);
 
         $dbMassage = [];
         if ($db_opration) {
-            $dbMassage['success'] = ' ** the role inserted';
+            $dbMassage['success'] = ' ** the category inserted';
         } else {
-            $dbMassage['filed'] = ' ** the role did not insert try agian';
+            $dbMassage['filed'] = ' ** the category did not insert try agian';
         }
         //    session for database massage 
         $_SESSION['dbMassage'] = $dbMassage;
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ################### Select Data Section  #####################
 
-$selectQuery = "SELECT * FROM `user_roles` ";
+$selectQuery = "SELECT * FROM `category` ";
 
 $select_op = doQuery($selectQuery);
 
@@ -69,7 +69,7 @@ require '../layouts/sidenav.php';
                 <?php
                 //display database massage 
 
-                displayMassage('dbMassage', 'Dashboard / role / create');
+                displayMassage('dbMassage', 'Dashboard / Category / create');
 
                 ?>
 
@@ -80,8 +80,8 @@ require '../layouts/sidenav.php';
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" enctype="multipart/form-data">
 
             <div class="form-group">
-                <label for="exampleInputEmail1">Role</label>
-                <input type="text" class="form-control" id="exampleInputText1" name="role_title" placeholder="Enter role">
+                <label for="exampleInputEmail1">Category</label>
+                <input type="text" class="form-control" id="exampleInputText1" name="Category_title" placeholder="Enter Category">
 
                 <!-- call diplay error massage function -->
 

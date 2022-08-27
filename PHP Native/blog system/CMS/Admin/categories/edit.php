@@ -7,7 +7,7 @@ require '../helper/functions.php';
 
 $id = $_GET['id'];
 
-$selectQuery = "SELECT * FROM `user_roles` WHERE id = $id";
+$selectQuery = "SELECT * FROM `category` WHERE id = $id";
 
 $select_op = doQuery($selectQuery);
 
@@ -32,29 +32,29 @@ if (mysqli_num_rows($select_op) == 0) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     //fetch & clean data
-    $role_title = clean($_POST['role_title']);
+    $category_title = clean($_POST['category_title']);
 
     // validation  data
-    validate($role_title, ['required', 'string', 'min', 'max'], 3, 32);
+    validate($category_title, ['required', 'string', 'min', 'max'], 3, 32);
 
 
     ##### update the role title 
 
     if (!isset($_SESSION['errorMassage'])) {
-        $query = "UPDATE user_roles SET title = '$role_title' WHERE id = $id";
+        $query = "UPDATE category SET title = '$category_title' WHERE id = $id";
 
         //doQuery function for excute query 
         $db_opration =  doQuery($query);
 
         $dbMassage = [];
         if ($db_opration) {
-            $dbMassage['success'] = ' ** the role Updated';
+            $dbMassage['success'] = ' ** the category Updated';
             $_SESSION['dbMassage'] = $dbMassage;
             
             header('location: index.php');
             exit();
         } else {
-            $dbMassage['filed'] = ' ** the role did not update try agian';
+            $dbMassage['filed'] = ' ** the category did not update try agian';
         }
         //    session for database massage 
         $_SESSION['dbMassage'] = $dbMassage;
@@ -92,7 +92,7 @@ require '../layouts/sidenav.php';
                 <?php
                 //display database massage 
 
-                displayMassage('dbMassage', 'Dashboard / role / Update');
+                displayMassage('dbMassage', 'Dashboard / category / Update');
 
                 ?>
 
@@ -104,7 +104,7 @@ require '../layouts/sidenav.php';
 
             <div class="form-group">
                 <label for="exampleInputEmail1">Role</label>
-                <input type="text" class="form-control" id="exampleInputText1" name="role_title" value="<?php echo $dataRow['title'] ?>" placeholder="Enter role">
+                <input type="text" class="form-control" id="exampleInputText1" name="category_title" value="<?php echo $dataRow['title'] ?>" placeholder="Enter category title">
 
                 <!-- call diplay error massage function -->
 

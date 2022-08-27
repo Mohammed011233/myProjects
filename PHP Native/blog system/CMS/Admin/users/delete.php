@@ -11,7 +11,7 @@ require '../helper/functions.php';
 
     if(!isset($_SESSION['errorMassage'] )){
 
-        $deleteQuery = "delete from user_roles where id = $id" ;
+        $deleteQuery = "delete from users where id = $id" ;
 
         $deleteOpration = doQuery($deleteQuery);
 

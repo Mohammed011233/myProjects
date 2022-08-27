@@ -11,7 +11,7 @@ require '../helper/functions.php';
 
     if(!isset($_SESSION['errorMassage'] )){
 
-        $deleteQuery = "delete from user_roles where id = $id" ;
+        $deleteQuery = "delete from category where id = $id" ;
 
         $deleteOpration = doQuery($deleteQuery);
 
@@ -19,7 +19,7 @@ require '../helper/functions.php';
     }else{
         unset($_SESSION['errorMassage']);
 
-        $massage = ['id_Error' => 'the id of role is not correct'] ;
+        $massage = ['id_Error' => 'the id of category is not correct'] ;
         
     }
 
