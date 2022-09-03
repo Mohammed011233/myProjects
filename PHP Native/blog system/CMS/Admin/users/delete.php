@@ -11,6 +11,12 @@ require '../helper/functions.php';
 
     if(!isset($_SESSION['errorMassage'] )){
 
+        $selectimg = "SELECT `image` FROM users WHERE id = $id";
+        $op = doQuery($selectimg);
+        $data = mysqli_fetch_assoc($op);
+
+       
+
         $deleteQuery = "delete from users where id = $id" ;
 
         $deleteOpration = doQuery($deleteQuery);
@@ -25,6 +31,7 @@ require '../helper/functions.php';
 
     
     if($deleteOpration){
+        removeFile($data['image']);
         $massage = ['success ' =>'the data deleted successfuly'] ;
     }else{
         $massage = ['field' =>'field in delete data try agian'];

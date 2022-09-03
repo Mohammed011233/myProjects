@@ -17,8 +17,9 @@ foreach ($flag as $index => $valid){
 
     switch ($valid) {
         case 'required':
+            
             if (empty($input)) {
-                
+               
                 $errors['required'] = 'this input require';
             }
             break;
@@ -76,6 +77,26 @@ foreach ($flag as $index => $valid){
                 $errors = ['size_Error' => 'Very larg . must to be less than  ' . $sizeM .'MB' ];
             }
             break;
+
+        case 'id':
+            if(!filter_var($input , FILTER_VALIDATE_INT)){
+                $errors = ['ID_Error' => 'The ID id not valid'];
+            }
+            break;
+
+        case 'date':
+            $date = explode('-', $input);
+            if(!checkdate($date[1] , $date[2] , $date[0])){
+                $errors = ['publish date' => 'the date is not valid'];
+            }
+            break;
+
+        case 'next_date':
+
+            if(time() > strtotime($input)){
+                $errors = ['publish date' => 'This time has passed '];
+            }
+            break;
     }
 
      // make array of errors in session
@@ -106,4 +127,16 @@ function displayMassage($sessionName , $title)
 
         unset($_SESSION[$sessionName]);
     
+}
+
+
+//remove files from uploads folder 
+function removeFile($file){
+    unlink('uploads/'.$file);
+}
+
+function url($page){
+    // http://localhost/my%20projects/PHP%20Native/blog%20system/CMS/Admin/index.php
+    
+    return 'http://'. $_SERVER['HTTP_HOST'] .'/my%20projects/PHP%20Native/blog%20system/CMS/Admin/'. $page ; 
 }

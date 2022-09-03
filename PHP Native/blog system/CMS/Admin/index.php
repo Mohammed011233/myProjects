@@ -1,6 +1,6 @@
 <?php
 require './helper/DB_connection.php';
-
+require './helper/functions.php';
 require './layouts/header.php';
 
 require './layouts/nav.php';

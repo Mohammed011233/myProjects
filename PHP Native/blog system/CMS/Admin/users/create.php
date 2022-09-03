@@ -13,9 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // fetch user date
     $firstName = clean($_POST['first_name']);
     $lastName = clean($_POST['last_name']);
-
-    $fullName = $firstName . ' ' . $lastName;
-
     $email = clean($_POST['email']);
     $password = clean($_POST['password']);
     $conf_password = clean($_POST['conf_pass']);
@@ -73,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         unset($_SESSION['errorMassage']);
     }
 
-    validate($conf_password , ['required', 'conf_pass'] ,null, null , null , $pass = $password );
+    validate($conf_password, ['required', 'conf_pass'], null, null, null, $pass = $password);
     if (isset($_SESSION['errorMassage'])) {
         $_SESSION['confPassError'] = $_SESSION['errorMassage'];
         $errorFlag = true;
@@ -89,21 +86,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         unset($_SESSION['errorMassage']);
     }
 
-    validate($imgExten, ['required', 'fileExtention'], null, null , null ,null , $realExtention = ['png', 'jpeg', 'jpg']);
-    if (isset($_SESSION['errorMassage'])) {
+    validate($image, ['required']);
+    if (!isset($_SESSION['errorMassage'])) {
+
+        validate($imgExten, ['fileExtention'], null, null, null, null, $realExtention = ['png', 'jpeg', 'jpg']);
+        if (isset($_SESSION['errorMassage'])) {
+            $_SESSION['imageError'] = $_SESSION['errorMassage'];
+            $errorFlag = true;
+
+            unset($_SESSION['errorMassage']);
+        }
+
+        validate($imgSize, ['fileSize'], null, null, $fileSize = 5 * 1048576);
+        if (isset($_SESSION['errorMassage'])) {
+            $_SESSION['imageError'] = $_SESSION['errorMassage'];
+            $errorFlag = true;
+
+            unset($_SESSION['errorMassage']);
+        }
+    } else {
         $_SESSION['imageError'] = $_SESSION['errorMassage'];
         $errorFlag = true;
 
         unset($_SESSION['errorMassage']);
     }
 
-    validate($imgSize, ['fileSize'],null , null , $fileSize = 5 * 1048576);
-    if (isset($_SESSION['errorMassage'])) {
-        $_SESSION['imageError'] = $_SESSION['errorMassage'];
-        $errorFlag = true;
-
-        unset($_SESSION['errorMassage']);
-    }
 
 
     if (!$errorFlag) {
@@ -122,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $password =  md5($password);
 
             //    insert date in database
-            $insertQuery = "insert into users (name , email , password , phone , image , role_id ) values ('$fullName' , '$email' , '$password' , '$phone' , '$finalImgName' , '$role_type')";
+            $insertQuery = "insert into users (first_name , last_name , email , password , phone , image , role_id ) values ('$firstName' , '$lastName' , '$email' , '$password' , '$phone' , '$finalImgName' , '$role_type')";
 
             $insert_op = doQuery($insertQuery);
 
@@ -134,10 +141,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $massage = ["Field" => "The image has not been uploaded !!! please try again"];
         }
-       
-    }else{
+    } else {
         $massage = ["field" => "thare are some errors"];
-
     }
     $_SESSION['dbMassage'] = $massage;
 }

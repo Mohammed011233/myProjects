@@ -5,7 +5,7 @@ require '../helper/functions.php';
 
 ################### Select Data Section  #####################
 
-$selectQuery = "SELECT * FROM `users` ";
+$selectQuery = "SELECT users.* , user_roles.title FROM `users` inner join user_roles on users.role_id = user_roles.id";
 
 $select_op = doQuery($selectQuery);
 
@@ -43,11 +43,6 @@ require '../layouts/sidenav.php';
             </li>
         </ol>
 
-        <div>
-            <a class="btn btn-primary stylebtn" href="create.php"> Create </a>
-        </div>
-        
-
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
@@ -65,6 +60,7 @@ require '../layouts/sidenav.php';
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+                                <th>Title</th>
                                 <th>Profile Image</th>
                                 <th>Action</th>
 
@@ -76,6 +72,7 @@ require '../layouts/sidenav.php';
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+                                <th>Title</th>
                                 <th>Profile Image</th>
                                 <th>Action</th>
 
@@ -98,9 +95,10 @@ require '../layouts/sidenav.php';
                                 <tr>
 
                                     <td> <?php echo ++$id; ?> </td>
-                                    <td><?php echo $rowData['name'] ?></td>
+                                    <td><?php echo $rowData['first_name'] . ' ' . $rowData['last_name'] ?></td>
                                     <td><?php echo $rowData['email'] ?></td>
                                     <td><?php echo $rowData['phone'] ?></td>
+                                    <td><?php echo $rowData['title'] ?></td>
                                     <td><img class="userImg" src="uploads/<?php echo $rowData['image'] ?>" alt=""></td>
 
                                     <td>
