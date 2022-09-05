@@ -1,3 +1,9 @@
+<?php 
+if ($_SESSION['user']['role_title'] != 'admin' && $_SESSION['user']['role_title'] != 'writer') {
+    header('location: ' . url('login.php'));
+}
+?>
+
 <div id="layoutSidenav">
 
     <!-- this is the start of sideNav -->
@@ -14,8 +20,11 @@
                     <div class="sb-sidenav-menu-heading">Interface</div>
 
                     <?php
-                    $modules = ['Roles', 'Users', 'Categories', 'Blogs'];
-
+                    if ($_SESSION['user']['role_title'] == 'admin') {
+                        $modules = ['Roles', 'Users', 'Categories', 'Blogs'];
+                    } elseif ($_SESSION['user']['role_title'] == 'writer') {
+                        $modules = ['Blogs'];
+                    }
                     foreach ($modules as $key => $module) {
 
                     ?>

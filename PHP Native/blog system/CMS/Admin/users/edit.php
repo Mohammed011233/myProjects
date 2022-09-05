@@ -1,6 +1,6 @@
 <?php
-require '../helper/DB_connection.php';
-require '../helper/functions.php';
+require '../helper/includes.php';
+require '../helper/checkAdmin.php';
 
 
 
@@ -179,6 +179,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['dbMassage'] = $dbMassage;
 
             header('location: index.php');
+
+            exit();
         } else {
             $dbMassage['filed'] = ' ** the role did not update try agian';
         }

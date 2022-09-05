@@ -1,17 +1,29 @@
 <?php
-require '../helper/DB_connection.php';
-require '../helper/functions.php';
+require '../helper/includes.php';
 
 
+// if ($_SESSION['user']['role_title'] != 'admin' && $_SESSION['user']['role_title'] != 'writer') {
+//     header('location: ' . url(''));
+// }
 ################### Select Data Section  #####################
 
-$selectQuery = "SELECT blogs.* , category.title as cat_title , users.first_name , users.last_name 
-                FROM `blogs` inner join category on blogs.cat_id = category.id
-                inner join users on blogs.addedby = users.id";
 
+$userID = $_SESSION['user']['id'];
+
+//select only blogs of the user if he is writer
+
+if ($_SESSION['user']['role_title'] == 'admin') {
+
+    $selectQuery = "SELECT blogs.* , category.title as cat_title , users.first_name , users.last_name 
+        FROM `blogs` inner join category on blogs.cat_id = category.id
+        inner join users on blogs.addedby = users.id";
+} else {
+
+    $selectQuery = "SELECT blogs.* , category.title as cat_title , users.first_name , users.last_name 
+        FROM `blogs` inner join category on blogs.cat_id = category.id
+        inner join users on blogs.addedby = users.id WHERE blogs.addedby = $userID ";
+}
 $select_op = doQuery($selectQuery);
-
-
 
 
 
@@ -41,16 +53,11 @@ require '../layouts/sidenav.php';
                 // displayMassage('delete_operation' , '');
 
                 displayMassage('dbMassage', 'show blogs');
-                
+
 
                 ?>
             </li>
         </ol>
-
-        <div>
-            <a class="btn btn-primary stylebtn" href="create.php"> Create </a>
-        </div>
-
 
         <div class="card mb-4">
             <div class="card-header">
@@ -99,6 +106,7 @@ require '../layouts/sidenav.php';
 
                             while ($rowData = mysqli_fetch_assoc($select_op)) {
 
+
                                 #####
                             ?>
 
@@ -106,14 +114,14 @@ require '../layouts/sidenav.php';
                                 <tr>
 
                                     <td> <?php echo ++$id; ?> </td>
-                                    
-                                    <td><?php echo $rowData['title'] ;?></td>
-                                    <td><?php echo substr($rowData['content'] , 0 , 15) ;?></td>
-                                    <td><?php echo date('d / M / Y' , $rowData['pu_date']) ; ?></td>
-                                    <td><?php echo $rowData['cat_title'] ;?></td>
-                                    <td><?php echo $rowData['first_name'] . ' ' . $rowData['last_name'] ;?></td>
 
-                                    <td><img class="userImg" src="uploads/<?php echo $rowData['image'] ;?>" alt="blog image"></td>
+                                    <td><?php echo $rowData['title']; ?></td>
+                                    <td><?php echo substr($rowData['content'], 0, 15); ?></td>
+                                    <td><?php echo date('d / M / Y', $rowData['pu_date']); ?></td>
+                                    <td><?php echo $rowData['cat_title']; ?></td>
+                                    <td><?php echo $rowData['first_name'] . ' ' . $rowData['last_name']; ?></td>
+
+                                    <td><img class="userImg" src="uploads/<?php echo $rowData['image']; ?>" alt="blog image"></td>
 
                                     <td>
                                         <a class="btn btn-danger" href="delete.php?id=<?php echo $rowData['id']; ?>"> Delete </a>
@@ -129,6 +137,7 @@ require '../layouts/sidenav.php';
 
                             <?php
                             }
+
                             #####
                             ?>
 

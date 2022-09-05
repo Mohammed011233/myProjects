@@ -1,6 +1,6 @@
 <?php
-require '../helper/DB_connection.php';
-require '../helper/functions.php';
+require '../helper/includes.php';
+
 
 
 
@@ -153,11 +153,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
+        $userID = $_SESSION['user']['id'] ;
         
         $id = $_SESSION['id'];
 
         $query = "UPDATE `blogs`
-                  SET `title`='$title',`content`='$content',`image`='$finalImgName',`pu_date`= $pubDate ,`cat_id`= $category ,`addedby`= 21 WHERE blogs.id = $id ";
+                  SET `title`='$title',`content`='$content',`image`='$finalImgName',`pu_date`= $pubDate ,`cat_id`= $category ,`addedby`=  $userID  WHERE blogs.id = $id ";
 
 
         //doQuery function for excute query 
@@ -172,6 +173,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             unset($_SESSION['id']);
 
             header('location: index.php');
+
+            exit();
         } else {
             $dbMassage['filed'] = ' ** the role did not update try agian';
         }

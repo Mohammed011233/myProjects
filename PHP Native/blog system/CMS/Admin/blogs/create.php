@@ -1,7 +1,10 @@
 <?php
-require '../helper/DB_connection.php';
-require '../helper/functions.php';
+require '../helper/includes.php';
 
+
+// if ($_SESSION['user']['role_title'] != 'admin' && $_SESSION['user']['role_title'] != 'writer') {
+//     header('location: ' . url(''));
+// }
 // select roles from DB to display in form 
 $selectQuery = "SELECT * FROM `category` ";
 
@@ -113,8 +116,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             //convert publish date into timestamp
             $pubDate = strtotime($pubDate);
+
+            $userID = $_SESSION['user']['id'] ;
             //    insert date in database
-            $insertQuery = "INSERT INTO `blogs`( `title`, `content`, `image`, `pu_date`, `cat_id`, `addedby`) VALUES ('$title' , '$content' , '$finalImgName' , $pubDate , $category , 21 )";
+            $insertQuery = "INSERT INTO `blogs`( `title`, `content`, `image`, `pu_date`, `cat_id`, `addedby`) VALUES ('$title' , '$content' , '$finalImgName' , $pubDate , $category , $userID)";
 
             $insert_op = doQuery($insertQuery);
 
@@ -276,4 +281,5 @@ require '../layouts/sidenav.php';
 <?php
 require '../layouts/footer.php';
 
+                              
 ?>

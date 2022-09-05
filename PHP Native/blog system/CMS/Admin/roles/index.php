@@ -1,7 +1,6 @@
 <?php
-require '../helper/DB_connection.php';
-require '../helper/functions.php';
-
+require '../helper/includes.php';
+require '../helper/checkAdmin.php';
 ################### Insert Data Section  #####################
 //create role
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

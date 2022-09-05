@@ -1,6 +1,6 @@
 <?php
-require '../helper/DB_connection.php';
-require '../helper/functions.php';
+require '../helper/includes.php';
+require '../helper/checkAdmin.php';
 
 // select roles from DB to display in form 
 $selectQuery = "SELECT * FROM `user_roles` ";

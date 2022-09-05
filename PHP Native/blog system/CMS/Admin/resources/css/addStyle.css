@@ -1,5 +1,6 @@
 p.errorMassage{
     min-height: 30px;
+    color: red;
 }
 
 img.userImg{
